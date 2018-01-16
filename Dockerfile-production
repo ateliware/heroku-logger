@@ -5,10 +5,10 @@ RUN apt-get update && apt-get install -y git curl libpq-dev build-essential nfs-
 RUN apt-get update && apt-get install -y libc-ares2 libv8-3.14.5 postgresql-client nodejs --no-install-recommends
 RUN update-alternatives --force --install /usr/bin/node node /usr/bin/nodejs 10
 
-RUN mkdir -p /magic_logger
-WORKDIR /magic_logger/
+RUN mkdir -p /heroku_logger
+WORKDIR /heroku_logger/
 
-COPY . /magic_logger/
+COPY . /heroku_logger/
 RUN bundle install
 
 RUN export PATH=$PATH:.

@@ -27,6 +27,6 @@ That's it. Heroku will start to send HTTPS requests to the web application, that
 
 As of now, the elasticsearch instance deployed with this project has no security, so feel free to make a pull request and fix that.
 
-You will need to use a domain because Heroku only allows log drain to HTTPS. Just point your domain to the IP that the magic-logger service comes up with.
+You will need to use a domain because Heroku only allows log drain to HTTPS. Just point your domain to the IP that the heroku-logger service comes up with.
 
 Learn more about the way Heroku allows us to consume the logs https://devcenter.heroku.com/articles/log-drains
