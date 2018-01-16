@@ -2,7 +2,11 @@ class Log
   require 'elasticsearch/persistence/model'
   include Elasticsearch::Persistence::Model
 
-  index_name "log_#{Rails.env}"
+  if Rails.env.production?
+    index_name "minestore_heroku_logs"
+  else
+    index_name "log_#{Rails.env}"
+  end
 
   attribute :http_method, String
   attribute :request_id, String
