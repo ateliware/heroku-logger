@@ -23,7 +23,7 @@ spec:
             memory: "100M"
             cpu: "100m"
           limits:
-            memory: "150M"
+            memory: "400M"
             cpu: "200m"
         env:
           - name: ELASTICSEARCH_URL
