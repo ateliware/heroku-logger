@@ -2,8 +2,8 @@ class LogsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def create
-    request.raw_post.split("\n").each do |request|
-      parser = Log::Parser.new(request)
+    request.raw_post.split("\n").each do |raw_data|
+      parser = Log::Parser.new(raw_data)
 
       if parser.try(:request_id)
         Log.create({
@@ -14,10 +14,10 @@ class LogsController < ApplicationController
           path: parser.path,
           fwd: parser.fwd,
           timestamp: parser.timestamp,
-          raw: request.raw_post
+          raw: raw_data
         })
       else
-        Log.create raw: request.raw_post.force_encoding('UTF-8'), timestamp: parser.timestamp
+        Log.create raw: raw_data.raw_post.force_encoding('UTF-8'), timestamp: parser.timestamp
       end
     end
 
