@@ -57,5 +57,5 @@
 </div>
 
 <% if @logs.size == @per_page %>
-  <a class="btn btn-block btn-primary" href="/?per_page=<%= @per_page + Kaminari.config.default_per_page %>&before_log=<%= @logs.first.id %>#<%= @logs.last.id %>">more...</a>
+  <a class="btn btn-block btn-primary" href='/?per_page=<%= @per_page + Kaminari.config.default_per_page %>&before_log=<%= @logs.first.id %><%= "&utf8=✓&http_method=#{@query_params[:http_method]}&request_id=#{@query_params[:request_id]}&status=#{@query_params[:status]}&host=#{@query_params[:host]}&path=#{@query_params[:path]}&fwd=#{@query_params[:fwd]}&commit=Filter" %>#<%= @logs.last.id %>'>more...</a>
 <% end %>
