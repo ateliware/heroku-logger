@@ -1,4 +1,4 @@
-# Magic Logger
+# Heroku Logger
 
 A graphic interface made in Rails for displaying and analyzing log files from [elasticsearch](https://en.wikipedia.org/wiki/Elasticsearch).
 
