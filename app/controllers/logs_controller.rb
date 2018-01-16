@@ -17,7 +17,7 @@ class LogsController < ApplicationController
           raw: raw_data
         })
       else
-        Log.create raw: raw_data.raw_post.force_encoding('UTF-8'), timestamp: parser.timestamp
+        Log.create raw: raw_data.force_encoding('UTF-8'), timestamp: parser.timestamp
       end
     end
 
