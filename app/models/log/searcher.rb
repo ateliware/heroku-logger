@@ -8,7 +8,8 @@ class Log::Searcher
             query_terms(params) +
             before_log(options[:before_log])
           }
-        }
+        },
+      sort: { timestamp: { order: :desc }}
     })
   end
 
