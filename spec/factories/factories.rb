@@ -2,11 +2,11 @@ FactoryBot.define do
   factory :log do
     host "example.com"
     path "/test"
-    http_method "GET"
+    http_method { %w(get post put delete).sample }
     status { 200 }
     fwd { Faker::Internet.public_ip_v4_address }
     created_at { Time.current }
-    timestamp { Time.current }
+    timestamp { Time.current - rand(10).days }
     request_id { Faker::Internet.ip_v6_address }
   end
 

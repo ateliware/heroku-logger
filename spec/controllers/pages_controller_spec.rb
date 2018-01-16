@@ -31,11 +31,6 @@ RSpec.describe PagesController, type: :controller do
         expect(assigns(:logs).map(&:class).uniq).to eq([Log])
       end
 
-      it "assign @logs sorted" do
-        expect(Log::Sorter).to receive(:sort_by_date)
-        get :index
-      end
-
       it "assign @logs paginated" do
         build_list(:log, Kaminari.config.default_per_page).each &:save
         Log.refresh_index!

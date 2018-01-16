@@ -19,7 +19,7 @@ RSpec.describe LogsController, type: :controller do
         post :create, 'some raw log with no request info'
         Log.refresh_index!
         expect(Log.count).to be > logs
-        log = Log::Sorter.sort_by_date(Log.all).last
+        log = Log.all.sort { |x,y| x.timestamp <=> y.timestamp }.last
         expect(log.request_id).to be_nil
         expect(log.raw).to be_present
       end
