@@ -1,7 +1,7 @@
 class Log::Searcher
   def self.search(params, options={})
     logs = Log.search({
-      from: 0, size: options[:per_page],
+      size: options[:per_page],
       query: {
         bool: {
           should:
