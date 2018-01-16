@@ -8,9 +8,7 @@ class PagesController < ApplicationController
   def index
     @logs = Log::Searcher.search(query_params, before_log: @before_log, per_page: @per_page)
 
-    if query_params.empty?
-      @logs = Log::Sorter.sort_by_date(@logs)
-    end
+    @logs = Log::Sorter.sort_by_date(@logs)
   end
 
 
