@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: magic-logger
-        image: gcr.io/$YOUR_GCP_PROJECT/magic-logger:latest
+        image: gcr.io/commonwealth-156613/heroku-logger:latest
         ports:
           - containerPort: 3000
             name: http
