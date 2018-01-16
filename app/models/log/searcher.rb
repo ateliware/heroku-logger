@@ -1,9 +1,7 @@
 class Log::Searcher
   def self.search(params, options={})
-    return Log.all unless params.any? || options[:before_log].present?
-
     logs = Log.search({
-      from: 0, size: 10000,
+      from: 0, size: options[:per_page],
       query: {
         bool: {
           should:

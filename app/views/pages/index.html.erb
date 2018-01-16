@@ -20,36 +20,34 @@
 <hr>
 
 <div class="panel panel-default">
-  <table class="table table-striped table-bordered">
+  <table class="table table-striped table-bordered logs">
     <thead class="thead-dark">
-      <th>timestamp</th>
-      <th>http_method</th>
-      <th>host</th>
-      <th>path</th>
-      <th>status</th>
-      <th>fwd</th>
-      <th>request_id</th>
+      <th class="timestamp">timestamp</th>
+      <th class="http_method">http_method</th>
+      <th class="host">host</th>
+      <th class="path">path</th>
+      <th class="status">status</th>
+      <th class="fwd">fwd</th>
     </thead>
 
     <tbody>
       <% @logs.each do |log| %>
         <% if log.request_id.present? %>
-          <tr id="<%= log.id %>" class="log">
-            <td><%= log.timestamp.strftime('%d/%m/%Y - %H:%M:%S %3N') %></td>
-            <td><%= log.http_method %></td>
-            <td><%= log.host %></td>
-            <td><%= log.path %></td>
-            <td><%= log.status %></td>
-            <td><%= log.fwd %></td>
-            <td><%= log.request_id %></td>
+          <tr id="<%= log.id %>" class="log request-log">
+            <td class="timestamp"><%= log.timestamp.strftime('%d/%m/%Y - %H:%M:%S %3N') %></td>
+            <td class="http_method"><%= log.http_method %></td>
+            <td class="host"><%= log.host %></td>
+            <td class="path"><%= log.path %></td>
+            <td class="status"><%= log.status %></td>
+            <td class="fwd"><%= log.fwd %></td>
           </tr>
         <% else %>
-          <tr id="<%= log.id %>">
+          <tr id="<%= log.id %>" class="arbitrary-log">
             <% if log.timestamp.present? %>
-              <td colspan="1"><%= log.timestamp.strftime('%d/%m/%Y - %H:%M:%S %3N') %></td>
-              <td colspan="6"><%= simple_format(log.to_s) %></td>
+              <td class="timestamp"><%= log.timestamp.strftime('%d/%m/%Y - %H:%M:%S %3N') %></td>
+              <td colspan="5"><%= simple_format(log.to_s) %></td>
             <% else %>
-              <td colspan="7"><%= simple_format(log.raw) %></td>
+              <td><%= simple_format(log.raw) %></td>
             <% end %>
           </tr>
         <% end %>

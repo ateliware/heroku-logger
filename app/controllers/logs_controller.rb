@@ -2,7 +2,7 @@ class LogsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def create
-    parser = Log::Parser.new(request.raw_post)
+    parser = Log::Parser.new(request.raw_post.split("\n"))
 
     if parser.try(:request_id)
       Log.create({

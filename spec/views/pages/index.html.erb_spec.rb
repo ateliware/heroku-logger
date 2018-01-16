@@ -11,12 +11,11 @@ RSpec.describe "pages/index.html.erb", type: :view do
 
   it "shows structured request data" do
     render
-    expect(rendered).to include("<td>#{logs.sample.request_id}</td>")
-    expect(rendered).to include("<td>#{logs.sample.http_method}</td>")
-    expect(rendered).to include("<td>#{logs.sample.status}</td>")
-    expect(rendered).to include("<td>#{logs.sample.host}</td>")
-    expect(rendered).to include("<td>#{logs.sample.path}</td>")
-    expect(rendered).to include("<td>#{logs.sample.fwd}</td>")
+    expect(rendered).to have_css 'td', text: logs.sample.http_method
+    expect(rendered).to have_css 'td', text: logs.sample.status
+    expect(rendered).to have_css 'td', text: logs.sample.host
+    expect(rendered).to have_css 'td', text: logs.sample.path
+    expect(rendered).to have_css 'td', text: logs.sample.fwd
   end
 
   it "shows raw data when log is not in request format" do

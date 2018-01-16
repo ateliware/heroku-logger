@@ -6,14 +6,10 @@ class PagesController < ApplicationController
   before_action :set_per_page
 
   def index
-    @logs = Log::Searcher.search(query_params, { before_log: @before_log })
+    @logs = Log::Searcher.search(query_params, before_log: @before_log, per_page: @per_page)
 
     if query_params.empty?
       @logs = Log::Sorter.sort_by_date(@logs)
-    end
-
-    if @logs.present?
-      @logs = Kaminari.paginate_array(@logs).page(1).per(@per_page)
     end
   end
 

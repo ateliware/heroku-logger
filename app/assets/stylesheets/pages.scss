@@ -31,5 +31,63 @@
     a.btn {
       margin-bottom: 15px;
     }
+
+    table.logs {
+      width: 100% ;
+      table-layout: fixed;
+
+      tr {
+        display: table-row;
+      }
+
+      td {
+        // word-wrap: break-word;
+        // white-space: pre-wrap;
+        overflow-wrap: break-word;
+        font-family: monospace;
+        font-size: 14px;
+      }
+
+      tr.request-log td {
+        border-left: 1px solid #333;
+        border-right: 1px solid #333;
+        vertical-align:middle;
+        text-align: center;
+        font-weight: 600;
+      }
+
+      th.timestamp, td.timestamp {
+        width: 15%;
+      }
+
+      th.path, td.path {
+        width: 45%;
+      }
+
+      td.fwd, th.fwd {
+        width: 9%;
+      }
+
+      td.host, th.host {
+        width: 15%;
+      }
+
+      td.status, th.status {
+        width: 4%;
+      }
+
+      td.http_method, th.http_method {
+        width: 7%;
+      }
+
+      tr.arbitrary-log td {
+        padding: 3px;
+
+        p {
+          margin: 0;
+          overflow-wrap: break-word;
+        }
+      }
+    }
   }
 }
