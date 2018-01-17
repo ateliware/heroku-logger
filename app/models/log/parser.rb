@@ -18,6 +18,18 @@ class Log::Parser
     Time.current
   end
 
+  def attribute_names
+    @raw_log.scan(/ *([a-z]+_*[a-z]*)=\S+ */).flatten
+  end
+
+  def attributes
+    attributes_hash = {}
+    attribute_names.each do |attribute_name|
+      attributes_hash[attribute_name] = attribute(attribute_name)
+    end
+    attributes_hash.symbolize_keys
+  end
+
 
   private
 
@@ -28,9 +40,5 @@ class Log::Parser
 
   def raw_attributes
     @raw_log.scan(/\S+=\S+/)
-  end
-
-  def attribute_names
-    @raw_log.scan(/ ([a-z]+_*[a-z]*)=/).flatten
   end
 end

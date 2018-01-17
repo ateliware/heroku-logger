@@ -1,18 +1,12 @@
 <h1>Heroku Logger</h1>
 
 <%= form_tag root_path, method: :get, id: 'filters' do %>
-  <%= label_tag :http_method, 'HTTP method' %>
-  <%= text_field_tag :http_method, @query_params[:http_method], class: 'form-control' %>
-  <%= label_tag :request_id, 'Request ID' %>
-  <%= text_field_tag :request_id, @query_params[:request_id], class: 'form-control' %>
-  <%= label_tag :status %>
-  <%= text_field_tag :status, @query_params[:status], class: 'form-control' %>
-  <%= label_tag :host %>
-  <%= text_field_tag :host, @query_params[:host], class: 'form-control' %>
-  <%= label_tag :path %>
-  <%= text_field_tag :path, @query_params[:path], class: 'form-control' %>
-  <%= label_tag :fwd, 'FWD' %>
-  <%= text_field_tag :fwd, @query_params[:fwd], class: 'form-control' %>
+  <%= label_tag :query, 'Query' %>
+  <%= text_field_tag :query, @query, class: 'form-control' %>
+  <%= label_tag :from, 'From' %>
+  <%= text_field_tag :from, @from.try(:strftime, '%d/%m/%Y %H:%M'), class: 'form-control' %>
+  <%= label_tag :to, 'To' %>
+  <%= text_field_tag :to, @to.try(:strftime, '%d/%m/%Y %H:%M'), class: 'form-control' %>
 
   <%= submit_tag "Filter", class: 'btn btn-primary' %>
 <% end %>
@@ -23,11 +17,10 @@
   <table class="table table-striped table-bordered logs">
     <thead class="thead-dark">
       <th class="timestamp">timestamp</th>
-      <th class="http_method">http_method</th>
+      <th class="http_method">method</th>
       <th class="host">host</th>
       <th class="path">path</th>
       <th class="status">status</th>
-      <th class="fwd">fwd</th>
     </thead>
 
     <tbody>
@@ -39,7 +32,6 @@
             <td class="host"><%= log.host %></td>
             <td class="path"><%= log.path %></td>
             <td class="status"><%= log.status %></td>
-            <td class="fwd"><%= log.fwd %></td>
           </tr>
         <% else %>
           <tr id="<%= log.id %>" class="arbitrary-log">
@@ -57,5 +49,5 @@
 </div>
 
 <% if @logs.size == @per_page %>
-  <a class="btn btn-block btn-primary" href='/?per_page=<%= @per_page + Kaminari.config.default_per_page %>&before_log=<%= @logs.first.id %><%= "&utf8=✓&http_method=#{@query_params[:http_method]}&request_id=#{@query_params[:request_id]}&status=#{@query_params[:status]}&host=#{@query_params[:host]}&path=#{@query_params[:path]}&fwd=#{@query_params[:fwd]}&commit=Filter" %>#<%= @logs.last.id %>'>more...</a>
+  <a class="btn btn-block btn-primary" href='/?per_page=<%= @per_page + Kaminari.config.default_per_page %>&before_log=<%= @logs.first.id %><%= "&utf8=✓&query=#{@query}&commit=Filter" %>#<%= @logs.last.id %>'>more...</a>
 <% end %>

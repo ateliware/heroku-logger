@@ -15,7 +15,6 @@ RSpec.describe "pages/index.html.erb", type: :view do
     expect(rendered).to have_css 'td', text: logs.sample.status
     expect(rendered).to have_css 'td', text: logs.sample.host
     expect(rendered).to have_css 'td', text: logs.sample.path
-    expect(rendered).to have_css 'td', text: logs.sample.fwd
   end
 
   it "shows raw data when log is not in request format" do
@@ -24,5 +23,12 @@ RSpec.describe "pages/index.html.erb", type: :view do
     assign :logs, logs + [non_structured_log]
     render
     expect(rendered).to include(non_structured_data)
+  end
+
+  it "auto fills query bar according to current search" do
+    query = 'method=get'
+    assign :query, query
+    render
+    expect(rendered).to have_css "#query[value='#{query}']"
   end
 end
