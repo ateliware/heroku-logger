@@ -1,0 +1,35 @@
+<% if log.request_id.present? %>
+  <tr id="<%= log.id %>" class="log request-log">
+    <% if expand %>
+      <td> - </td>
+    <% else %>
+      <td class="expand">
+        <%= link_to "#", class: 'expand-action', data: { after_log: log.id } do %>
+          <i class="fa fa-arrow-up"></i>
+        <% end %>
+        <%= link_to "#", class: 'expand-action', data: { before_log: log.id } do %>
+          <i class="fa fa-arrow-down"></i>
+        <% end %>
+      </td>
+    <% end %>
+    <td class="timestamp"><%= log.timestamp.strftime('%d/%m/%Y - %H:%M:%S %3N') %></td>
+    <td class="http_method"><%= log.http_method %></td>
+    <td class="host"><%= log.host %></td>
+    <td class="path"><%= log.path %></td>
+    <td class="status"><%= log.status %></td>
+  </tr>
+<% else %>
+  <tr id="<%= log.id %>" class="arbitrary-log">
+    <% if expand %>
+      <td> - </td>
+    <% else %>
+      <td></td>
+    <% end %>
+    <% if log.timestamp.present? %>
+      <td class="timestamp"><%= log.timestamp.strftime('%d/%m/%Y - %H:%M:%S %3N') %></td>
+      <td colspan="5"><%= simple_format(log.to_s) %></td>
+    <% else %>
+      <td><%= simple_format(log.raw) %></td>
+    <% end %>
+  </tr>
+<% end %>

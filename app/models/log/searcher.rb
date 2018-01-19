@@ -1,19 +1,28 @@
 class Log::Searcher
   def self.search(params, options={})
     per_page = options[:per_page] || Kaminari.config.default_per_page
+    per_page *= 2 if options[:expanding]
 
-    Log.search({
+    logs = Log.search({
       size: per_page,
       query: {
         bool: {
           must:
             query_terms(params) +
             before_log(options[:before_log]) +
+            after_log(options[:after_log]) +
             date_filter(options[:from], options[:to])
           }
         },
-      sort: { timestamp: { order: :desc }}
+      sort: { timestamp: { order: order(options) }}
     })
+
+    return logs unless options[:expanding].present?
+    if options[:after_log].present?
+      logs.sort { |x,y| x.timestamp <=> y.timestamp }.reverse
+    else
+      logs.sort { |x,y| x.timestamp <=> y.timestamp }
+    end
   end
 
   def self.before_log(log)
@@ -24,6 +33,20 @@ class Log::Searcher
         range: {
           timestamp: {
             lte: log.timestamp,
+          }
+        }
+      }
+    ]
+  end
+
+  def self.after_log(log)
+    return [] if log.blank?
+
+    [
+      {
+        range: {
+          timestamp: {
+            gte: log.timestamp,
           }
         }
       }
@@ -64,5 +87,9 @@ class Log::Searcher
     es_params += [{ term: { host: params[:host].split('-')[0] } }]
     es_params += [{ term: { host: params[:host].split('-')[1] } }]
     es_params
+  end
+
+  def self.order(options)
+    (options[:after_log].present? && options[:expanding].present?) ? :asc : :desc
   end
 end

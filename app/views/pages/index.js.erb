@@ -1,0 +1,20 @@
+<% if @before_log.present? %>
+  <% @logs.each do |log| %>
+    $("<%= escape_javascript(render partial: 'log', locals: { log: log, expand: true }) %>").insertAfter($("#<%= @current %>"));
+  <% end %>
+
+  $('html, body').animate({
+    scrollTop: $("#<%= @current %>").offset().top
+  }, 200);
+<% end %>
+
+
+<% if @after_log.present? %>
+  <% @logs.each do |log| %>
+    $("<%= escape_javascript(render partial: 'log', locals: { log: log, expand: true }) %>").insertBefore($("#<%= @current %>"));
+  <% end %>
+
+  $('html, body').animate({
+    scrollTop: $("#<%= @current %>").offset().top - window.innerHeight + $("#<%= @current %>").innerHeight()
+  }, 200);
+<% end %>

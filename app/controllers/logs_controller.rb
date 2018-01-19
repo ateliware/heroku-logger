@@ -22,5 +22,9 @@ class LogsController < ApplicationController
     end
 
     head :ok
+  rescue
+    Log.create raw: request.raw_post.force_encoding('UTF-8'), timestamp: Time.current, parsing_failure: true
+
+    head :ok
   end
 end

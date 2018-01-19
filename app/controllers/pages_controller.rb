@@ -2,20 +2,35 @@ class PagesController < ApplicationController
 
   before_action :force_authentication
   before_action :set_query_params
-  before_action :set_before_log
+  before_action :set_anchor_logs
   before_action :set_per_page
   before_action :set_date_filters
 
   def index
-    @logs = Log::Searcher.search(@query_params, before_log: @before_log, per_page: @per_page, from: @from, to: @to)
+    @logs = Log::Searcher.search(
+      @query_params, before_log: @before_log, after_log: @after_log,
+      per_page: @per_page, from: @from, to: @to, expanding: params[:expand]
+    )
+
+    @current = params[:current]
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
 
   private
 
-  def set_before_log
-    return if params[:before_log].blank?
-    @before_log = Log.find(params[:before_log])
+  def set_anchor_logs
+    if params[:before_log].present?
+      @before_log = Log.find(params[:before_log])
+    end
+
+    if params[:after_log].present?
+      @after_log = Log.find(params[:after_log])
+    end
   end
 
   def set_query_params

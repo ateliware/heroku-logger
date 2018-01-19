@@ -54,11 +54,14 @@
         font-size: 14px;
       }
 
-      tr.request-log td {
-        border-left: 1px solid #ddd;
-        border-right: 1px solid #ddd;
-        vertical-align:middle;
-        background-color: white;
+      tr.request-log {
+        background-color: white !important;
+
+        td {
+          border-left: 1px solid #ddd;
+          border-right: 1px solid #ddd;
+          vertical-align:middle;
+        }
       }
 
       td.timestamp, td.status, td.http_method {
@@ -88,10 +91,20 @@
       tr.arbitrary-log td {
         padding: 3px;
 
+        &.expand {
+          padding: 0.35em 0.75em;
+        }
+
         p {
           margin: 0;
           overflow-wrap: break-word;
         }
+      }
+
+      th.expand, td.expand {
+        text-align: center;
+        width: 32px;
+        padding: 0.35em 0.75em;
       }
     }
   }

@@ -16,6 +16,7 @@
 <div class="panel panel-default">
   <table class="table table-striped table-bordered logs">
     <thead class="thead-dark">
+      <th class="expand">e</th>
       <th class="timestamp">timestamp</th>
       <th class="http_method">method</th>
       <th class="host">host</th>
@@ -25,29 +26,12 @@
 
     <tbody>
       <% @logs.each do |log| %>
-        <% if log.request_id.present? %>
-          <tr id="<%= log.id %>" class="log request-log">
-            <td class="timestamp"><%= log.timestamp.strftime('%d/%m/%Y - %H:%M:%S %3N') %></td>
-            <td class="http_method"><%= log.http_method %></td>
-            <td class="host"><%= log.host %></td>
-            <td class="path"><%= log.path %></td>
-            <td class="status"><%= log.status %></td>
-          </tr>
-        <% else %>
-          <tr id="<%= log.id %>" class="arbitrary-log">
-            <% if log.timestamp.present? %>
-              <td class="timestamp"><%= log.timestamp.strftime('%d/%m/%Y - %H:%M:%S %3N') %></td>
-              <td colspan="5"><%= simple_format(log.to_s) %></td>
-            <% else %>
-              <td><%= simple_format(log.raw) %></td>
-            <% end %>
-          </tr>
-        <% end %>
+        <%= render partial: "log", locals: { log: log, expand: false } %>
       <% end %>
     </tbody>
   </table>
 </div>
 
 <% if @logs.size == @per_page %>
-  <a class="btn btn-block btn-primary" href='/?per_page=<%= @per_page + Kaminari.config.default_per_page %>&before_log=<%= @logs.first.id %><%= "&utf8=✓&query=#{@query}&commit=Filter" %>#<%= @logs.last.id %>'>more...</a>
+  <a class="btn btn-block btn-primary" href='/?per_page=<%= @per_page + Kaminari.config.default_per_page %>&before_log=<%= @logs.first.id %><%= "&utf8=✓&query=#{@query}" %>#<%= @logs.last.id %>'>more...</a>
 <% end %>

@@ -14,5 +14,3 @@ RUN bundle install
 RUN export PATH=$PATH:.
 
 EXPOSE 3000
-
-ENTRYPOINT bundle exec puma -p 3000
