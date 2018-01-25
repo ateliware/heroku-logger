@@ -12,8 +12,8 @@ class Log::Searcher
             before_log(options[:before_log]) +
             after_log(options[:after_log]) +
             date_filter(options[:from], options[:to])
-          }
-        },
+        }
+      },
       sort: { timestamp: { order: order(options) }}
     })
 
@@ -73,20 +73,16 @@ class Log::Searcher
       value.present?
     end
 
-    es_params = params.map do |param, value|
-      { term: { param => value } }
+    params.map do |key, value|
+      {
+        match: {
+          key => {
+            query: value,
+            operator: 'and'
+          }
+        }
+      }
     end
-
-    es_params = handle_special_host(es_params, params)
-  end
-
-  def self.handle_special_host(es_params, params)
-    return es_params unless params[:host].try(:include?, '-')
-
-    es_params -= [{ term: { host: params[:host] } }]
-    es_params += [{ term: { host: params[:host].split('-')[0] } }]
-    es_params += [{ term: { host: params[:host].split('-')[1] } }]
-    es_params
   end
 
   def self.order(options)

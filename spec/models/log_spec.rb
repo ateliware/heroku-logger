@@ -6,7 +6,7 @@ RSpec.describe Log, type: :model do
   describe "#to_s" do
     it "joins all information in one line" do
       Log.relevant_attributes.each do |attribute|
-        next if attribute == :timestamp
+        next if [:timestamp, :parsing_failure].include?(attribute)
         expect(log.to_s).to include attribute.to_s
         expect(log.to_s).to include log.send(attribute).to_s
       end

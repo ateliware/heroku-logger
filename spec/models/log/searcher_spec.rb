@@ -9,6 +9,11 @@ RSpec.describe Log::Searcher do
       Log.refresh_index!
     end
 
+    it "supports search for request_id" do
+      logs = Log::Searcher.search request_id: Log.all.first.request_id
+      expect(logs.size).to eq 1
+    end
+
     it "accepts special characters search" do
       log = build(:log, path: '/path').save
       Log.refresh_index!
@@ -48,7 +53,7 @@ RSpec.describe Log::Searcher do
       paginated_logs.each do |log|
         expect(log.http_method).to eq 'GET'
       end
-      
+
       logs.each do |log|
         expect(paginated_logs_ids).to include(log.id)
       end
@@ -62,8 +67,8 @@ RSpec.describe Log::Searcher do
       query_statements = Log::Searcher.query_terms(params)
       attributes = []
       query_statements.each do |statement|
-        expect(statement[:term].keys.size).to eq(1)
-        key = statement[:term].keys.first
+        expect(statement[:match].keys.size).to eq(1)
+        key = statement[:match].keys.first
         attributes << key
       end
 
